@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mahesh Baviskar | DevOps Engineer Portfolio</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  
+  <!-- Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    :root {
+      --bg: #030712;
+      --surface: #0f172a;
+      --surface-hover: #1e293b;
+      --border: #334155;
+      --primary: #3b82f6;
+      --primary-glow: rgba(59, 130, 246, 0.5);
+      --secondary: #10b981;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+      --font-sans: 'Plus Jakarta Sans', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    html { scroll-behavior: smooth; }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Decorative background gradient */
+    .bg-gradient {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle at 50% -20%, #1e293b 0%, transparent 50%);
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 1.5rem; }
+
+    /* Navigation */
+    nav {
+      position: fixed; top: 0; left: 0; width: 100%;
+      height: 80px; display: flex; align-items: center;
+      background: rgba(3, 7, 18, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+    }
+    .nav-content {
+      width: 100%; display: flex; justify-content: space-between; align-items: center;
+    }
+    .logo { font-weight: 800; font-size: 1.5rem; color: var(--primary); text-decoration: none; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a { 
+      text-decoration: none; color: var(--text-muted); 
+      font-size: 0.9rem; font-weight: 500; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--primary); }
+
+    /* Sections */
+    section { padding: 100px 0; }
+
+    /* Hero */
+    .hero { min-height: 100vh; display: flex; align-items: center; padding-top: 120px; }
+    .hero-grid {
+      display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      background: rgba(59, 130, 246, 0.1); border: 1px solid var(--primary);
+      color: var(--primary); padding: 0.5rem 1rem; border-radius: 99px;
+      font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem;
+    }
+    .hero h1 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; }
+    .hero h1 span { color: var(--primary); }
+    .hero p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 2.5rem; max-width: 600px; }
+    
+    .btn-group { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn {
+      padding: 0.8rem 1.8rem; border-radius: 8px; font-weight: 600; 
+      text-decoration: none; transition: all 0.3s; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 0.5rem;
+    }
+    .btn-primary { background: var(--primary); color: white; border: none; box-shadow: 0 10px 15px -3px var(--primary-glow); }
+    .btn-primary:hover { transform: translateY(-2px); opacity: 0.9; }
+    .btn-secondary { background: transparent; color: var(--text-main); border: 1px solid var(--border); }
+    .btn-secondary:hover { background: var(--surface); border-color: var(--primary); }
+
+    /* Terminal UI */
+    .terminal {
+      background: #000; border: 1px solid var(--border); border-radius: 12px;
+      overflow: hidden; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      font-family: var(--font-mono); font-size: 0.85rem;
+    }
+    .terminal-header {
+      background: #1e293b; padding: 10px 15px; display: flex; gap: 6px;
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .terminal-body { padding: 20px; color: #cbd5e1; }
+    .code-comment { color: #64748b; }
+    .code-key { color: #3b82f6; }
+    .code-val { color: #10b981; }
+
+    /* Skills Grid */
+    .section-header { margin-bottom: 3rem; text-align: center; }
+    .section-header h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+    .skill-card {
+      background: var(--surface); border: 1px solid var(--border); 
+      padding: 2rem; border-radius: 16px; transition: all 0.3s;
+    }
+    .skill-card:hover { border-color: var(--primary); transform: translateY(-5px); }
+    .skill-icon { color: var(--primary); margin-bottom: 1rem; }
+    .skill-card h3 { margin-bottom: 1rem; font-size: 1.2rem; }
+    .tag-cloud { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .tag { 
+      background: rgba(59, 130, 246, 0.1); color: var(--primary); 
+      padding: 4px 10px; border-radius: 4px; font-size: 0.75rem; 
+      font-family: var(--font-mono);
+    }
+
+    /* Projects */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 2rem; }
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; overflow: hidden; transition: 0.3s;
+      display: flex; flex-direction: column;
+    }
+    .project-card:hover { border-color: var(--primary); }
+    .project-info { padding: 1.5rem; flex-grow: 1; }
+    .project-info h3 { margin-bottom: 0.5rem; }
+    .project-info p { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+    .project-links { display: flex; gap: 1rem; padding-top: 1rem; border-top: 1px solid var(--border); }
+    .project-links a { 
+      text-decoration: none; color: var(--primary); font-size: 0.85rem; 
+      font-weight: 600; display: flex; align-items: center; gap: 4px;
+    }
+
+    /* Contact & Socials */
+    .contact-container {
+      background: var(--surface); border: 1px solid var(--border);
+      padding: 3rem; border-radius: 24px; text-align: center;
+    }
+    .social-links { display: flex; justify-content: center; gap: 1.5rem; margin-top: 2rem; }
+    .social-btn {
+      width: 50px; height: 50px; display: flex; align-items: center; justify-content: center;
+      background: var(--bg); border: 1px solid var(--border); border-radius: 12px;
+      color: var(--text-main); transition: 0.3s; text-decoration: none;
+    }
+    .social-btn:hover { border-color: var(--primary); color: var(--primary); transform: scale(1.1); }
+
+    /* Footer */
+    footer { padding: 40px 0; border-top: 1px solid var(--border); color: var(--text-dim); text-align: center; font-size: 0.85rem; }
+
+    @media (max-width: 768px) {
+      .hero-grid { grid-template-columns: 1fr; text-align: center; }
+      .hero h1 { font-size: 2.5rem; }
+      .hero p { margin: 0 auto 2.5rem; }
+      .btn-group { justify-content: center; }
+      .nav-links { display: none; }
+      .hero-right { order: -1; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-gradient"></div>
+
+  <nav>
+    <div class="container nav-content">
+      <a href="#" class="logo">MB.</a>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <a href="mailto:maheshbaviskar@gmail.com" class="btn btn-primary" style="padding: 0.5rem 1.2rem; font-size: 0.8rem;">Hire Me</a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-left">
+          <div class="hero-badge">
+            <span style="display:inline-block; width:8px; height:8px; background:var(--secondary); border-radius:50%;"></span>
+            Open for New Opportunities
+          </div>
+          <h1>Architecting <span>Cloud</span> Infrastructure & Pipelines</h1>
+          <p>DevOps Engineer with 3.8+ years of experience at HCL Technologies. Specializing in AWS, Kubernetes, and Terraform to build resilient, automated systems.</p>
+          <div class="btn-group">
+            <a href="#projects" class="btn btn-primary">View My Work <i data-lucide="arrow-right" size="18"></i></a>
+            <!-- PUT YOUR LINKEDIN LINK HERE -->
+            <a href="https://linkedin.com/in/mahesh-baviskar" target="_blank" class="btn btn-secondary">LinkedIn <i data-lucide="external-link" size="18"></i></a>
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="terminal">
+            <div class="terminal-header">
+              <div class="dot" style="background:#ff5f56"></div>
+              <div class="dot" style="background:#ffbd2e"></div>
+              <div class="dot" style="background:#27c93f"></div>
+            </div>
+            <div class="terminal-body">
+              <p><span class="code-comment">// DevOps Profile</span></p>
+              <p><span class="code-key">const</span> engineer = {</p>
+              <p>&nbsp;&nbsp;name: <span class="code-val">"Mahesh Baviskar"</span>,</p>
+              <p>&nbsp;&nbsp;role: <span class="code-val">"DevOps Engineer"</span>,</p>
+              <p>&nbsp;&nbsp;exp: <span class="code-val">"3.5+ Years"</span>,</p>
+              <p>&nbsp;&nbsp;location: <span class="code-val">"Noida, India"</span>,</p>
+              <p>&nbsp;&nbsp;focus: [<span class="code-val">"EKS"</span>, <span class="code-val">"IaC"</span>, <span class="code-val">"CI/CD"</span>]</p>
+              <p>};</p>
+              <br>
+              <p><span class="code-key">admin@mahesh</span>:~$ terraform apply</p>
+              <p><span class="code-val">Success! Infrastructure ready.</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS SECTION -->
+    <section id="skills">
+      <div class="container">
+        <div class="section-header">
+          <p style="color:var(--primary); font-weight:600; margin-bottom:0.5rem; text-transform:uppercase; letter-spacing:1px;">Capabilities</p>
+          <h2>My Technical Arsenal</h2>
+        </div>
+        <div class="skills-grid">
+          <div class="skill-card">
+            <i data-lucide="cloud" class="skill-icon"></i>
+            <h3>Cloud & Containers</h3>
+            <div class="tag-cloud">
+              <span class="tag">AWS</span>
+              <span class="tag">Kubernetes</span>
+              <span class="tag">Docker</span>
+              <span class="tag">EC2</span>
+              <span class="tag">EKS</span>
+              <span class="tag">Lambda</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <i data-lucide="code-2" class="skill-icon"></i>
+            <h3>Infrastructure as Code</h3>
+            <div class="tag-cloud">
+              <span class="tag">Terraform</span>
+              <span class="tag">Ansible</span>
+              <span class="tag">CloudFormation</span>
+              <span class="tag">HCL</span>
+            </div>
+          </div>
+          <div class="skill-card">
+            <i data-lucide="git-branch" class="skill-icon"></i>
+            <h3>CI/CD & Monitoring</h3>
+            <div class="tag-cloud">
+              <span class="tag">Jenkins</span>
+              <span class="tag">GitHub Actions</span>
+              <span class="tag">Prometheus</span>
+              <span class="tag">Grafana</span>
+              <span class="tag">SonarQube</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section id="projects">
+      <div class="container">
+        <div class="section-header">
+          <h2>Featured Work</h2>
+        </div>
+        <div class="projects-grid">
+          <!-- Project 1 -->
+          <div class="project-card">
+            <div class="project-info">
+              <h3>3-TierAppChallenger</h3>
+              <p>Deploying the 3 tier app using the kuberntes.</p>
+              <div class="tag-cloud">
+                <span class="tag">Terraform</span>
+                <span class="tag">EKS</span>
+                <span class="tag">Helm</span>
+              </div>
+            </div>
+            <div class="project-links">
+              <!-- REPLACE WITH YOUR ACTUAL PROJECT GITHUB LINK -->
+              <a href="https://github.com/Mahesh9093/Mahesh9093" target="_blank"><i data-lucide="github" size="16"></i> View Code</a>
+              <a href="#" target="_blank"><i data-lucide="external-link" size="16"></i> Documentation</a>
+            </div>
+          </div>
+
+          <!-- Project 2 -->
+          <div class="project-card">
+            <div class="project-info">
+              <h3>AWS native ci/cd </h3>
+              <p>https://github.com/Mahesh9093/Project-brain-task.</p>
+              <div class="tag-cloud">
+                <span class="tag">AWS </span>
+                <span class="tag">Kubernetes</span>
+                <span class="tag">Docker</span>
+              </div>
+            </div>
+            <div class="project-links">
+              <!-- REPLACE WITH YOUR ACTUAL PROJECT GITHUB LINK -->
+              <a href="https://github.com/Mahesh9093/Project-brain-task" target="_blank"><i data-lucide="github" size="16"></i> View Code</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact">
+      <div class="container">
+        <div class="contact-container">
+          <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Let's Build Something Great</h2>
+          <p style="color:var(--text-muted); margin-bottom: 2rem;">I'm currently looking for new opportunities in DevOps and Cloud Engineering.</p>
+          
+          <a href="mailto:mpbaviskar05@gmail.com" class="btn btn-primary" style="gap: 0.5rem;"><i data-lucide="mail"></i> Send me an Email</a>
+
+          <div class="social-links">
+            <a href="https://github.com/Mahesh9093" target="_blank" class="social-btn" title="GitHub">
+              <i data-lucide="github"></i>
+            </a>
+            <a href="https://linkedin.com/in/mahesh-baviskar" target="_blank" class="social-btn" title="LinkedIn">
+              <i data-lucide="linkedin"></i>
+            </a>
+            <a href="mailto:mpbaviskar05@gmail.com" class="social-btn" title="Gmail">
+              <i data-lucide="mail"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Mahesh Baviskar. Built with focus and determination.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Initialize Icons
+    lucide.createIcons();
+
+    // Smooth Scroll Offset for Nav
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
